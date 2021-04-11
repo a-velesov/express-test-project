@@ -1,14 +1,25 @@
-const http = require('http');
+import express from 'express';
+import mongoose from 'mongoose';
 
-const hostname = '127.0.0.1';
-const port = 4000;
+const PORT = 5000;
 
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello World');
-});
+const DB_URL = `mongodb+srv://user:user@cluster0.ihdgg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
+const app = express();
+
+app.use(express.json())
+
+app.post('/', (req, res) => {
+    res.status(200).json('Server work')
+})
+
+async function startApp() {
+    try {
+        await mongoose.connect(DB_URL, {useNewUrlParser: true , useUnifiedTopology: true});
+        app.listen(PORT, () => console.log('server start ' + PORT));
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+startApp();
