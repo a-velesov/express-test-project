@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import router from './router.js';
 
 const PORT = 5000;
 
@@ -7,11 +8,8 @@ const DB_URL = `mongodb+srv://user:user@cluster0.ihdgg.mongodb.net/myFirstDataba
 
 const app = express();
 
-app.use(express.json())
-
-app.post('/', (req, res) => {
-    res.status(200).json('Server work')
-})
+app.use(express.json());
+app.use('/api', router);
 
 async function startApp() {
     try {
