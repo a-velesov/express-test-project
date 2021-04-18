@@ -2,10 +2,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import router from './router.js';
 import fileUpload from 'express-fileupload';
+import dotenv from 'dotenv';
 
-const PORT = 5001;
-
-const DB_URL = `mongodb+srv://user:user@cluster0.ihdgg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+dotenv.config()
 
 const app = express();
 
@@ -16,8 +15,8 @@ app.use('/api', router);
 
 async function startApp() {
     try {
-        await mongoose.connect(DB_URL, {useNewUrlParser: true , useUnifiedTopology: true});
-        app.listen(PORT, () => console.log('server start ' + PORT));
+        await mongoose.connect(process.env.DB_URL, {useNewUrlParser: true , useUnifiedTopology: true});
+        app.listen(process.env.APP_PORT, () => console.log('server start ' + process.env.APP_PORT));
     } catch (e) {
         console.log(e);
     }
